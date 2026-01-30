@@ -1,16 +1,43 @@
-# React + Vite
+# GOLDEN | High-Performance Digital Infrastructure
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Protocolo de Proyecto
+* **Version:** 2.6.0
+* **Core Stack:** React 18, Tailwind CSS v4, Lucide React
+* **Architecture:** Component-Based / High-Fidelity UI
+* **Deployment Status:** Production Ready
 
-Currently, two official plugins are available:
+## Descripción Técnica
+Infraestructura digital desarrollada bajo estándares de alto rendimiento y optimización de recursos. El sistema implementa una estética industrial premium orientada a servicios de ingeniería de software y diseño exclusivo.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Especificaciones de Ingeniería
+* **Perception Engine:** Sistema de interferencia visual (Glitch) procesado mediante animaciones nativas de CSS para minimizar la carga en el hilo principal de ejecución.
+* **Node System:** Interfaz de servicios basada en nodos interconectados con estados dinámicos.
+* **Legal Data Shield:** Implementación de flujo de cumplimiento para el tratamiento de datos personales bajo la Ley 1581 de 2012 (Habeas Data).
+* **GPU-Accelerated UI:** Optimización de renders y transiciones mediante propiedades transform y opacity para asegurar 60fps constantes.
 
-## React Compiler
+## Requisitos del Entorno
+* Node.js (LTS recomendado)
+* NPM o PNPM como gestor de paquetes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Guía de Despliegue Local
+1.  Clonación del repositorio:
+    ```bash
+    git clone [https://github.com/SERGIIO0101/golden-web.git](https://github.com/SERGIIO0101/golden-web.git)
+    ```
+2.  Instalación de dependencias:
+    ```bash
+    npm install
+    ```
+3.  Ejecución del entorno de desarrollo:
+    ```bash
+    npm run dev
+    ```
 
-## Expanding the ESLint configuration
+## Estructura de Directorios
+* `/src/components`: Componentes atómicos y funcionales.
+* `/src/sections`: Secciones principales de la arquitectura One-Page.
+* `/src/index.css`: Definición del sistema de diseño y variables globales de Tailwind v4.
+* `/public`: Activos estáticos y metadatos de sistema.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+**Desarrollado por SERGIIO0101** *Ingeniería Digital y Estética de Vanguardia.*
