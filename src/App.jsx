@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-// Importación de componentes de navegación y globales
+
+// Componentes Globales
 import { Navbar } from './components/Navbar';
 import { MouseFollower } from './components/MouseFollower';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { LegalModal } from './components/LegalModal';
 
-// Importación de secciones
+// Secciones del Pipeline
 import { Hero } from './sections/Hero';
 import { Services } from './sections/Services';
 import { TechStack } from './sections/TechStack';
@@ -16,110 +17,107 @@ import { Contact } from './sections/Contact';
 import { Footer } from './sections/Footer';
 
 function App() {
-  // --- ESTADO PARA LOS MODALES LEGALES ---
   const [modalConfig, setModalConfig] = useState({ 
     isOpen: false, 
     title: '', 
     content: '' 
   });
 
-  // --- LÓGICA DE REDACCIÓN TÉCNICA Y LEGAL ---
+  // --- GESTIÓN LEGAL CENTRALIZADA ---
   const openLegal = (type) => {
     const legalData = {
       privacidad: {
         title: "PROTOCOLO_DE_PRIVACIDAD_Y_HABEAS_DATA",
-        content: `ESTADO_DEL_SISTEMA: PROTECCIÓN_DE_DATOS_PERSONALES (LEY 1581 DE 2012)
-
-1. IDENTIDAD DEL RESPONSABLE: 
-GOLDEN, con domicilio en Cartagena, Colombia. Canal oficial: proyectos@golden.web.
-
-2. FINALIDAD ESTRATÉGICA: 
-Los datos recolectados mediante formularios o WhatsApp (+57 3152157034) se utilizarán exclusivamente para la gestión de consultas técnicas, elaboración de presupuestos de ingeniería digital y seguimiento de proyectos activos.
-
-3. DERECHOS DEL TITULAR: 
-Usted tiene derecho a conocer, actualizar y rectificar sus datos personales. Para ejercer estos derechos, contacte a nuestra línea de soporte técnico.
-
-4. SEGURIDAD DE LA INFORMACIÓN: 
-Implementamos protocolos de seguridad lógica para garantizar que su información no sea compartida ni transferida a terceros sin consentimiento previo.`
+        content: `ESTADO_DEL_SISTEMA: PROTECCIÓN_DE_DATOS_PERSONALES (LEY 1581 DE 2012)\n\n1. IDENTIDAD DEL RESPONSABLE: GOLDEN, Cartagena, Colombia.\n2. FINALIDAD: Gestión de consultas técnicas y presupuestos.\n3. DERECHOS: Acceso, rectificación y supresión de datos.`
       },
       terminos: {
         title: "TÉRMINOS_Y_CONDICIONES_DE_SERVICIO",
-        content: `ESTADO_DEL_SISTEMA: TÉRMINOS_Y_CONDICIONES_DE_DESPLIEGUE
-
-1. PROPIEDAD INTELECTUAL: 
-Todo código fuente, arquitectura de sistemas y activos visuales desarrollados por GOLDEN son propiedad de la marca hasta la liquidación total del proyecto.
-
-2. CLÁUSULA DE PORTAFOLIO: 
-GOLDEN se reserva el derecho de exhibir representaciones visuales y técnicas de los proyectos realizados (ej. Caso de Éxito: Jenny Montoya) como evidencia de capacidad técnica, salvo acuerdo de confidencialidad previo.
-
-3. PROGRAMA DE ACCESIBILIDAD: 
-Las tarifas para emprendedores están sujetas a evaluación de viabilidad técnica y disponibilidad en el pipeline de desarrollo.
-
-4. GARANTÍA TÉCNICA: 
-Se establece un periodo de soporte de 30 días post-despliegue para la corrección de errores de arquitectura (bugs) derivados de la implementación original.`
+        content: `ESTADO_DEL_SISTEMA: TÉRMINOS_Y_CONDICIONES_DE_DESPLIEGUE\n\n1. PROPIEDAD: El código es propiedad de GOLDEN hasta la liquidación.\n2. SOPORTE: 30 días de garantía técnica post-lanzamiento.`
       }
     };
 
-    setModalConfig({ 
-      isOpen: true, 
-      title: legalData[type].title, 
-      content: legalData[type].content 
-    });
+    if (legalData[type]) {
+      setModalConfig({ 
+        isOpen: true, 
+        title: legalData[type].title, 
+        content: legalData[type].content 
+      });
+    }
   };
 
-  // --- EFECTO DE REVELADO (SCROLL REVEAL) ---
+  // --- MOTOR DE ANIMACIÓN POR SCROLL (Intersection Observer) ---
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15 // Se activa cuando el 15% del elemento es visible
+    };
+
+    const handleReveal = (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('reveal-visible');
+          // Una vez revelado, dejamos de observar para ahorrar recursos
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    };
 
+    const observer = new IntersectionObserver(handleReveal, observerOptions);
     const elements = document.querySelectorAll('.reveal');
+    
     elements.forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="bg-black min-h-screen relative overflow-hidden selection:bg-golden selection:text-black">
-      {/* CAPAS GLOBALES */}
+    <div className="bg-black min-h-screen relative overflow-x-hidden selection:bg-golden selection:text-black font-sans antialiased text-gray-200">
+      
+      {/* CAPA 0: UTILIDADES Y SEGUIDORES (GPU Accelerated) */}
       <MouseFollower />
       <Navbar />
       
-      {/* FLUJO DE NAVEGACIÓN */}
-      <main>
-        <div id="hero" className="reveal"><Hero /></div>
-        <div id="servicios" className="reveal"><Services /></div>
-        <div id="tecnologia" className="reveal"><TechStack /></div>
-        <div id="proceso" className="reveal"><Pipeline /></div>
+      {/* CAPA 1: MAIN PIPELINE */}
+      <main role="main">
+        <section id="hero" className="reveal"><Hero /></section>
+        <section id="servicios" className="reveal"><Services /></section>
+        <section id="tecnologia" className="reveal"><TechStack /></section>
+        <section id="proceso" className="reveal"><Pipeline /></section>
+        <section id="proyectos" className="reveal"><Projects /></section>
+        <section id="testimonios" className="reveal"><Testimonials /></section>
         
-        {/* Sección de Proyectos donde está Jenny Montoya */}
-        <div id="proyectos" className="reveal"><Projects /></div>
-        
-        <div id="testimonios" className="reveal"><Testimonials /></div>
-        
-        <div id="contacto" className="reveal">
-          {/* Pasamos la función openLegal para que el checkbox del formulario pueda abrir los modales */}
+        <section id="contacto" className="reveal">
           <Contact onOpenLegal={openLegal} />
-        </div>
+        </section>
       </main>
 
-      {/* FOOTER CON INYECCIÓN DE FUNCIONES */}
+      {/* CAPA 2: CIERRE Y LEGAL */}
       <Footer onOpenLegal={openLegal} />
 
-      {/* SISTEMA DE MODALES DE ALTA FIDELIDAD */}
+      {/* COMPONENTES DE INTERFAZ SOBREPUESTA */}
       <LegalModal 
         isOpen={modalConfig.isOpen}
-        onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+        onClose={() => setModalConfig(prev => ({ ...prev, isOpen: false }))}
         title={modalConfig.title}
         content={modalConfig.content}
       />
 
-      {/* ACCESO DIRECTO A INGENIERÍA */}
       <WhatsAppButton phone="573152157034" />
+
+      {/* ESTILOS GLOBALES DE REVELADO (Injectados o en CSS) */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .reveal {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, transform;
+        }
+        .reveal-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      `}} />
     </div>
   );
 }

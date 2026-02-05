@@ -1,7 +1,6 @@
 import React from 'react';
 import { Instagram, Linkedin, Twitter, ArrowUpRight, Mail } from 'lucide-react';
 
-// Recibimos la función onOpenLegal como prop desde App.jsx
 export const Footer = ({ onOpenLegal }) => {
   const currentYear = new Date().getFullYear();
 
@@ -13,52 +12,63 @@ export const Footer = ({ onOpenLegal }) => {
           {/* IDENTIDAD */}
           <div className="lg:col-span-2">
             <div className="flex items-center mb-8 group cursor-pointer w-fit">
-              <div className="w-9 h-9 border border-golden/50 rotate-[45deg] flex items-center justify-center group-hover:rotate-0 group-hover:border-cyber-pink transition-all duration-500">
+              <div className="w-9 h-9 border border-golden/50 rotate-[45deg] flex items-center justify-center group-hover:rotate-0 group-hover:border-cyber-pink transition-all duration-500" aria-hidden="true">
                 <span className="text-sm font-black text-golden rotate-[-45deg] group-hover:rotate-0 transition-all duration-500">G</span>
               </div>
               <span className="text-2xl font-black tracking-tighter text-white ml-4">GOLDEN</span>
             </div>
-            <p className="text-gray-500 max-w-sm text-sm leading-relaxed font-light">
+            <p className="text-gray-400 max-w-sm text-sm leading-relaxed font-light">
               Desarrollamos soluciones digitales de alto impacto. Ingeniería de software con un enfoque implacable en la estética y el rendimiento.
             </p>
           </div>
 
           {/* NAVEGACIÓN RÁPIDA */}
-          <div>
+          <nav aria-label="Navegación del pie de página">
             <h4 className="text-golden font-mono text-[10px] tracking-[0.4em] uppercase mb-8 opacity-70">Mapa_del_Sitio</h4>
             <ul className="space-y-4">
               {['Inicio', 'Servicios', 'Tecnología', 'Proceso'].map((item) => (
                 <li key={item}>
                   <a 
                     href={`#${item.toLowerCase()}`} 
-                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center gap-2 text-xs uppercase tracking-widest"
+                    className="text-gray-400 hover:text-white hover:translate-x-2 transition-all duration-300 flex items-center gap-2 text-xs uppercase tracking-widest focus-visible:text-golden outline-none"
                   >
-                    <ArrowUpRight size={14} className="text-cyber-pink" /> {item}
+                    <ArrowUpRight size={14} className="text-cyber-pink" aria-hidden="true" /> {item}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* CANALES DE CONTACTO */}
           <div>
             <h4 className="text-golden font-mono text-[10px] tracking-[0.4em] uppercase mb-8 opacity-70">Contacto_</h4>
             <div className="space-y-6">
-              <a href="mailto:proyectos@golden.web" className="group flex items-center gap-3 text-gray-400 hover:text-white transition-colors">
+              <a 
+                href="mailto:proyectos@golden.web" 
+                className="group flex items-center gap-3 text-gray-400 hover:text-white transition-colors outline-none focus-visible:text-white"
+                aria-label="Enviar correo electrónico a proyectos@golden.web"
+              >
                 <div className="p-2 bg-white/5 border border-white/10 group-hover:border-cyber-pink/50 transition-colors">
-                  <Mail size={16} />
+                  <Mail size={16} aria-hidden="true" />
                 </div>
                 <span className="text-sm font-mono">proyectos@golden.web</span>
               </a>
               
               <div className="flex gap-3">
-                {[Instagram, Linkedin, Twitter].map((Icon, i) => (
+                {[
+                  { Icon: Instagram, label: "Instagram", url: "#" },
+                  { Icon: Linkedin, label: "LinkedIn", url: "#" },
+                  { Icon: Twitter, label: "Twitter", url: "#" }
+                ].map(({ Icon, label, url }, i) => (
                   <a 
                     key={i} 
-                    href="#" 
-                    className="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500"
+                    href={url} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visitar nuestro perfil de ${label}`}
+                    className="w-10 h-10 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500 focus-visible:border-golden outline-none"
                   >
-                    <Icon size={18} />
+                    <Icon size={18} aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -66,23 +76,24 @@ export const Footer = ({ onOpenLegal }) => {
           </div>
         </div>
 
-        {/* BARRA INFERIOR CON MODALES ACTIVOS */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-gray-600">
-          <span className="text-[9px] font-mono uppercase tracking-[0.3em]">
+        {/* BARRA INFERIOR */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <span className="text-[9px] font-mono uppercase tracking-[0.3em] text-gray-500">
             © {currentYear} GOLDEN_CORP. ALL_SYSTEMS_OPERATIONAL.
           </span>
           
           <div className="flex gap-8 text-[9px] font-mono uppercase tracking-[0.2em]">
-            {/* Botones que disparan la lógica legal de App.jsx */}
             <button 
               onClick={() => onOpenLegal('privacidad')}
-              className="hover:text-golden transition-colors cursor-pointer border-none bg-transparent"
+              className="text-gray-500 hover:text-golden transition-colors cursor-pointer border-none bg-transparent outline-none focus-visible:underline"
+              aria-label="Leer política de privacidad"
             >
               Privacy_Policy
             </button>
             <button 
               onClick={() => onOpenLegal('terminos')}
-              className="hover:text-golden transition-colors cursor-pointer border-none bg-transparent"
+              className="text-gray-500 hover:text-golden transition-colors cursor-pointer border-none bg-transparent outline-none focus-visible:underline"
+              aria-label="Leer términos de servicio"
             >
               Terms_of_Service
             </button>
@@ -91,7 +102,7 @@ export const Footer = ({ onOpenLegal }) => {
       </div>
 
       {/* MARCA DE AGUA */}
-      <div className="absolute -bottom-10 -left-10 pointer-events-none select-none opacity-[0.03]">
+      <div className="absolute -bottom-10 -left-10 pointer-events-none select-none opacity-[0.03]" aria-hidden="true">
         <h2 className="text-[20vw] font-black text-white leading-none tracking-tighter uppercase italic">
           GOLDEN
         </h2>

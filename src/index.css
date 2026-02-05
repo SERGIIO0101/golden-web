@@ -27,11 +27,12 @@ body {
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
+  background: var(--color-dark-bg);
 }
 
 /* Compensación de Navbar para Scroll de Secciones */
 section[id] {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 100px;
 }
 
 /* --- CAPA DE INGENIERÍA VISUAL (Background System) --- */
@@ -39,6 +40,7 @@ section[id] {
   background-color: var(--color-dark-bg);
   position: relative;
   min-height: 100vh;
+  z-index: 1;
 }
 
 /* Malla de red sutil (Grid de ingeniería) */
@@ -46,37 +48,38 @@ section[id] {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 0);
-  background-size: 40px 40px;
+  background-image: radial-gradient(rgba(212, 175, 55, 0.07) 1px, transparent 0);
+  background-size: 50px 50px;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1; 
 }
 
-/* Glow Fucsia Atmosférico */
+/* Glow Atmosférico dinámico */
 .bg-golden-system::after {
   content: "";
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 0% 0%, rgba(255, 0, 127, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 100% 100%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);
+    radial-gradient(circle at 10% 20%, rgba(255, 0, 127, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
-/* --- COMPONENTES Y UTILIDADES --- */
+/* --- COMPONENTES Y UTILIDADES DE ALTA FIDELIDAD --- */
 
 .glass-panel {
   backdrop-filter: blur(16px);
-  background: rgba(10, 10, 10, 0.6);
+  background: rgba(5, 5, 5, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, border-color;
 }
 
 .glass-panel:hover {
-  border-color: var(--color-cyber-pink);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 30px rgba(255, 0, 127, 0.15);
+  border-color: var(--color-golden);
+  background: rgba(212, 175, 55, 0.03);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.05);
   transform: translateY(-5px);
 }
 
@@ -88,9 +91,9 @@ section[id] {
   text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 
-/* --- SISTEMA DE ANIMACIONES --- */
+/* --- SISTEMA DE ANIMACIONES (Hardware Accelerated) --- */
 
-/* Línea de escaneo para Modales o Secciones */
+/* Línea de escaneo */
 @keyframes scan {
   0% { top: -10%; opacity: 0; }
   50% { opacity: 0.8; }
@@ -103,9 +106,10 @@ section[id] {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--color-cyber-pink), var(--color-golden), transparent);
   animation: scan 4s linear infinite;
+  pointer-events: none;
 }
 
-/* Scroll Infinito (Corregido para fluidez total) */
+/* Scroll Infinito */
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -114,7 +118,8 @@ section[id] {
 .animate-scroll {
   display: flex;
   width: max-content;
-  animation: scroll 30s linear infinite;
+  animation: scroll 35s linear infinite;
+  will-change: transform;
 }
 
 .animate-scroll:hover {
@@ -124,8 +129,9 @@ section[id] {
 /* Revelado por Scroll (Intersection Observer) */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-visible {
@@ -133,47 +139,76 @@ section[id] {
   transform: translateY(0);
 }
 
-/* Efecto Glitch para H1 */
+/* Efecto Glitch corregido para no romper el layout */
 .glitch-hover:hover {
   animation: glitch-anim 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
   text-shadow: 
-    3px 0 rgba(255, 0, 127, 0.7), 
-    -3px 0 rgba(212, 175, 55, 0.7);
+    2px 0 var(--color-cyber-pink), 
+    -2px 0 var(--color-golden);
 }
 
 @keyframes glitch-anim {
   0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(-1px, -1px); }
+  75% { transform: translate(1px, 1px); }
   100% { transform: translate(0); }
 }
 
-/* --- LOGO DINÁMICO --- */
+/* --- ELEMENTOS DE IDENTIDAD --- */
 .logo-box {
   transform: rotate(45deg);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(212, 175, 55, 0.5);
+  border: 1px solid rgba(212, 175, 55, 0.4);
 }
 
 .group:hover .logo-box {
   transform: rotate(0deg);
   border-color: var(--color-cyber-pink);
-  box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
 }
 
 /* Scrollbar Personalizada */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: #000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #222;
+  background: #1a1a1a;
   border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.1);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-golden);
+}
+
+/* Accesibilidad y Foco */
+*:focus-visible {
+  outline: 2px solid var(--color-golden);
+  outline-offset: 4px;
+}
+
+/* Reducción de movimiento (Optimización UX) */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .glitch-hover, .scanner-line, .animate-scroll {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* --- CORRECCIONES PARA CELULARES (AGREGADO) --- */
+@layer base {
+  * {
+    /* Evita el recuadro gris al tocar botones en móvil */
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    /* Mejora legibilidad en pantallas Retina/OLED */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
 }
